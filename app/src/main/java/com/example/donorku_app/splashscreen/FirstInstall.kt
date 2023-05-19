@@ -9,7 +9,7 @@ class FirstInstall (name:String, context: Context) {
         return sharedPref.getBoolean(key, defaultValue)
     }
 
-    // Method akan digunakan untuk menyimpan nama player dan item
+
     fun putBoolean(key: String, value: Boolean) {
         sharedPref.edit().putBoolean(key, value).apply()
     }

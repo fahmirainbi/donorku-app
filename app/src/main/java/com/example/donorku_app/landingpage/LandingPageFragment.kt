@@ -36,7 +36,6 @@ class LandingPageFragment : Fragment() {
         arguments?.let {
             imageResource = it.getInt(ARG_IMG)
             text = it.getString(ARG_EDIT_TEXT)
-            buttonVisibility = it.getInt(ARG_BTN_VISIBLITY)
         }
     }
 
@@ -50,11 +49,12 @@ class LandingPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvNext.setOnClickListener{
+        binding.tvSkip.setOnClickListener{
             val intent = Intent(activity,LoginActivity::class.java)
             startActivity(intent)
         }
-        binding.tvNext.visibility = buttonVisibility!!
+//        binding.tvSkip.visibility = buttonVisibility!!
+        binding.tvLpDesc.text=text
         imageResource.let {
             if (it != null) {
                 binding.ivImage.setImageResource(it)

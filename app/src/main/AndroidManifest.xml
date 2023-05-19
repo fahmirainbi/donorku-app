@@ -12,10 +12,13 @@
         android:theme="@style/Theme.Donorkuapp"
         tools:targetApi="31">
         <activity
-            android:name=".SignUpActivity"
+            android:name=".home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".signup.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".landingpage.LandingPageActivity"
