@@ -10,63 +10,59 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="42dp"
-        android:textAlignment="center"
-        android:fontFamily="@font/semibold"
-        android:textColor="@color/red"
         android:layout_marginTop="70dp"
-        />
+        android:fontFamily="@font/semibold"
+        android:text="Login"
+        android:textAlignment="center"
+        android:textColor="@color/red"
+        android:textSize="42dp" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_email_login"
         android:layout_width="350dp"
         android:layout_height="47dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="30dp"
         android:background="@drawable/btn_background4"
-        android:inputType="text"
-        android:text="    Email/Nomor Telepon"
-        android:fontFamily="@font/medium"
-        android:textColor="@color/grey_font"
         android:elevation="2dp"
+        android:fontFamily="@font/medium"
+        android:inputType="text"
         android:shadowColor="@color/black"
         android:shadowRadius="@integer/material_motion_duration_long_2"
-        android:textSize="18dp"
-        />
+        android:text="    Email/Nomor Telepon"
+        android:textColor="@color/grey_font"
+        android:textSize="18dp" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_password_login"
         android:layout_width="350dp"
         android:layout_height="47dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="30dp"
         android:background="@drawable/btn_background4"
-        android:inputType="text"
-        android:text="    Password"
-        android:fontFamily="@font/medium"
-        android:textColor="@color/grey_font"
         android:elevation="2dp"
+        android:fontFamily="@font/medium"
+        android:inputType="text"
         android:shadowColor="@color/black"
         android:shadowRadius="@integer/material_motion_duration_long_2"
-        android:textSize="18dp"
-        />
+        android:text="    Password"
+        android:textColor="@color/grey_font"
+        android:textSize="18dp" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/red"
+        android:fontFamily="@font/semibold"
         android:text="Masuk"
         android:textAlignment="center"
-        android:fontFamily="@font/semibold"
-        android:textSize="18dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
         android:textColor="@color/white"
-        />
+        android:textSize="18dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,46 +102,52 @@
         android:id="@+id/btn_google"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:text="Google"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
         android:drawableLeft="@drawable/logo_google"
         android:fontFamily="@font/semibold"
-        android:textSize="18dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
         android:onClick="buttonGoogle"
+        android:text="Google"
+        android:textColor="@color/black"
+        android:textSize="18dp"
 
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:background="@color/grey"
-        android:layout_marginTop="152dp">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Belum mempunyai akun Donorku?"
-            android:textColor="@color/black"
-            android:fontFamily="@font/semibold"
-            android:textSize="12dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"/>
+            android:layout_alignParentBottom="true"
+            android:background="@color/grey">
 
-        <TextView
-            android:id="@+id/iv_signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Daftar sekarang"
-            android:textColor="@color/blue"
-            android:fontFamily="@font/semibold"
-            android:textSize="12dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/semibold"
+                android:layout_marginLeft="-50dp"
+                android:text="Belum mempunyai akun Donorku?"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/iv_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="-115dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/semibold"
+                android:text="Daftar sekarang"
+                android:textColor="@color/blue"
+                android:textSize="12dp" />
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </RelativeLayout>
 
 </LinearLayout>

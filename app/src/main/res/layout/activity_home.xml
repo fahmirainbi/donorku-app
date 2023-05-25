@@ -47,8 +47,8 @@
             android:id="@+id/ic_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="270dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/ic_notification" />
 
     </LinearLayout>
@@ -56,7 +56,7 @@
     <ImageView
         android:layout_width="370dp"
         android:layout_height="90dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/btn_background4" />
 
@@ -73,7 +73,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
+        android:layout_marginLeft="12dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -183,7 +183,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
@@ -201,9 +201,9 @@
                 android:background="@drawable/btn_background5"
                 android:paddingLeft="18dp"
                 android:paddingTop="15dp"
-                android:paddingRight="18dp"
+                android:paddingRight="12dp"
                 android:paddingBottom="15dp"
-                android:src="@drawable/ic_activity" />
+                android:src="@drawable/ic_blood" />
 
             <TextView
                 android:layout_width="90dp"
@@ -211,7 +211,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/medium"
-                android:text="Kegiatan Donor Darah"
+                android:text="Permintaan Darah"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
@@ -236,9 +236,9 @@
                     android:background="@drawable/btn_background5"
                     android:paddingLeft="18dp"
                     android:paddingTop="17dp"
-                    android:paddingRight="18dp"
-                    android:paddingBottom="17dp"
-                    android:src="@drawable/ic_stok" />
+                    android:paddingRight="12dp"
+                    android:paddingBottom="19dp"
+                    android:src="@drawable/ic_transfusi_activity" />
 
                 <TextView
                     android:layout_width="90dp"
@@ -246,7 +246,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/medium"
-                    android:text="Stok Kantung Darah"
+                    android:text="Pengajuan Kegiatan Donor"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="10dp" />
@@ -271,10 +271,10 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/btn_background5"
                         android:paddingLeft="20dp"
-                        android:paddingTop="15dp"
+                        android:paddingTop="21dp"
                         android:paddingRight="20dp"
-                        android:paddingBottom="13dp"
-                        android:src="@drawable/ic_emergency" />
+                        android:paddingBottom="21dp"
+                        android:src="@drawable/ic_coupon" />
 
                     <TextView
                         android:layout_width="90dp"
@@ -282,7 +282,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/medium"
-                        android:text="Info Darah Darurat"
+                        android:text="Kupon Donorku"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
@@ -294,7 +294,30 @@
     <ImageView
         android:layout_width="370dp"
         android:layout_height="140dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/btn_background4" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fl_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_navigation" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/btn_background1"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/nav_menu" />
+
+    </RelativeLayout>
+
 </LinearLayout>
