@@ -8,6 +8,7 @@ android {
     namespace 'com.example.donorku_app'
     compileSdk 33
 
+
     defaultConfig {
         applicationId "com.example.donorku_app"
         minSdk 24
@@ -94,8 +95,6 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
-    //ViewPager2
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
 
     //RoundedImageView
     implementation 'com.makeramen:roundedimageview:2.3.0'

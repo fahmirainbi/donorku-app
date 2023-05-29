@@ -29,7 +29,6 @@ class LandingPageFragment : Fragment() {
     }
     private var imageResource: Int? = null
     private var text: String? = null
-    private var buttonVisibility: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +36,7 @@ class LandingPageFragment : Fragment() {
             imageResource = it.getInt(ARG_IMG)
             text = it.getString(ARG_EDIT_TEXT)
         }
+
     }
 
     override fun onCreateView(
