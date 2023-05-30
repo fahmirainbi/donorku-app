@@ -1,5 +1,6 @@
 package com.example.donorku_app.home.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,9 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.donorku_app.R
+import com.example.donorku_app.activitydonorrequest.DonorRequestActivity
+import com.example.donorku_app.bloodrequest.BloodRequestActivity
+import com.example.donorku_app.coupondonorku.CouponDonorkuActivity
 import com.example.donorku_app.databinding.FragmentHomeBinding
+import com.example.donorku_app.donoractivity.DonorActivity
+import com.example.donorku_app.donoremergency.DonorEmergencyActivity
 import com.example.donorku_app.home.imageslider.ImageData
 import com.example.donorku_app.home.imageslider.ImageSliderAdapter
+import com.example.donorku_app.notification.NotificationActivity
+import com.example.donorku_app.stockdonor.StockBloodActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,7 +55,6 @@ class HomeFragment : Fragment() {
         }
 
 
-
     }
 
     override fun onCreateView(
@@ -58,18 +65,19 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
         handler = Handler(Looper.getMainLooper())
-        runnable = object :Runnable{
+        runnable = object : Runnable {
             var index = 0
             override fun run() {
-                if(index == list.size)
+                if (index == list.size)
                     index = 0
-                Log.e("Runnable","$index")
+                Log.e("Runnable", "$index")
                 binding.viewPager2.setCurrentItem(index)
                 index++
-                handler.postDelayed(this,4000)
+                handler.postDelayed(this, 4000)
             }
         }
 
+//        Image Slider
         list.add(
             ImageData(
                 R.drawable.image_slider1
@@ -96,6 +104,57 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+//        binding button
+        binding.btnBlood.setOnClickListener{
+            requireActivity().run {
+                startActivity(Intent(this,BloodRequestActivity::class.java))
+            }
+        }
+
+        binding.btnBloodStock.setOnClickListener{
+            requireActivity().run {
+                startActivity(Intent(this,StockBloodActivity::class.java))
+            }
+        }
+
+        binding.btnCoupon.setOnClickListener{
+            requireActivity().run {
+                startActivity(Intent(this,CouponDonorkuActivity::class.java))
+            }
+        }
+
+        binding.btnInfo.setOnClickListener{
+            requireActivity().run {
+                startActivity(Intent(this,DonorEmergencyActivity::class.java))
+            }
+        }
+
+        binding.btnDonorActivity.setOnClickListener{
+            requireActivity().run {
+                startActivity(Intent(this,DonorActivity::class.java))
+            }
+        }
+
+        binding.btnReqActivity.setOnClickListener{
+            requireActivity().run {
+                startActivity(Intent(this,DonorRequestActivity::class.java))
+            }
+        }
+
+        binding.icNotification.setOnClickListener{
+            requireActivity().run {
+                startActivity(Intent(this,NotificationActivity::class.java))
+            }
+        }
+
+
+    }
+
+//  Image slider
     override fun onStart() {
         super.onStart()
         handler.post(runnable)

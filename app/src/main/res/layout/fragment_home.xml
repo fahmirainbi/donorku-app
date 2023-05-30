@@ -83,6 +83,7 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/btn_donor_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -118,6 +119,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/btn_blood_stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -154,6 +156,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/btn_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -194,6 +197,7 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/btn_blood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -229,6 +233,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/btn_req_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -265,6 +270,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/btn_coupon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
