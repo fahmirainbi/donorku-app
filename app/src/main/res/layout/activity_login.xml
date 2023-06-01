@@ -30,7 +30,8 @@
         android:inputType="text"
         android:shadowColor="@color/black"
         android:shadowRadius="@integer/material_motion_duration_long_2"
-        android:text="    Email/Nomor Telepon"
+        android:padding="10dp"
+        android:text="Email/Nomor Telepon"
         android:textColor="@color/grey_font"
         android:textSize="18dp" />
 
@@ -47,7 +48,8 @@
         android:inputType="text"
         android:shadowColor="@color/black"
         android:shadowRadius="@integer/material_motion_duration_long_2"
-        android:text="    Password"
+        android:text="Password"
+        android:padding="10dp"
         android:textColor="@color/grey_font"
         android:textSize="18dp" />
 
