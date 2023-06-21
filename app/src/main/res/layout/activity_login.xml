@@ -17,41 +17,41 @@
         android:textColor="@color/red"
         android:textSize="42dp" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_email_login"
-        android:layout_width="350dp"
-        android:layout_height="47dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_background4"
-        android:elevation="2dp"
-        android:fontFamily="@font/medium"
-        android:inputType="text"
-        android:shadowColor="@color/black"
-        android:shadowRadius="@integer/material_motion_duration_long_2"
-        android:padding="10dp"
-        android:text="Email/Nomor Telepon"
-        android:textColor="@color/grey_font"
-        android:textSize="18dp" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_password_login"
-        android:layout_width="350dp"
-        android:layout_height="47dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_background4"
-        android:elevation="2dp"
-        android:fontFamily="@font/medium"
-        android:inputType="text"
-        android:shadowColor="@color/black"
-        android:shadowRadius="@integer/material_motion_duration_long_2"
-        android:text="Password"
-        android:padding="10dp"
-        android:textColor="@color/grey_font"
-        android:textSize="18dp" />
+        <EditText
+            android:id="@+id/et_email_login"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/btn_background4"
+            android:hint="Email"
+            android:inputType="text"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:fontFamily="@font/semibold"
+            android:textSize="18dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/et_password_login"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/btn_background4"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:fontFamily="@font/semibold"
+            android:textSize="18dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_login"

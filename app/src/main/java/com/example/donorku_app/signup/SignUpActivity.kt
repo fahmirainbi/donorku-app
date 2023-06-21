@@ -64,11 +64,10 @@ class SignUpActivity : AppCompatActivity() {
 
         ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
+            Toast.makeText(this@SignUpActivity,"Error : " +t.message,Toast.LENGTH_SHORT).show()
             }
 
         })
