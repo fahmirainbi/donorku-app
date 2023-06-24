@@ -57,6 +57,8 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.14.2'
 
+    implementation 'org.checkerframework:checker-qual:3.13.0'
+
 //    RecyleView & CardView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'

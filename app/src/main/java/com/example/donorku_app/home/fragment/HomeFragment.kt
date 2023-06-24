@@ -111,43 +111,65 @@ class HomeFragment : Fragment() {
 //        binding button
         binding.btnBlood.setOnClickListener{
             requireActivity().run {
-                startActivity(Intent(this,BloodRequestActivity::class.java))
+                val intent =Intent(this,BloodRequestActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
             }
         }
 
         binding.btnBloodStock.setOnClickListener{
             requireActivity().run {
-                startActivity(Intent(this,StockBloodActivity::class.java))
+                val intent =Intent(this,StockBloodActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
             }
         }
 
         binding.btnCoupon.setOnClickListener{
             requireActivity().run {
-                startActivity(Intent(this,CouponDonorkuActivity::class.java))
+                val intent =Intent(this,CouponDonorkuActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
+
             }
         }
 
         binding.btnInfo.setOnClickListener{
             requireActivity().run {
-                startActivity(Intent(this,DonorEmergencyActivity::class.java))
+                val intent =Intent(this,DonorEmergencyActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
             }
         }
 
         binding.btnDonorActivity.setOnClickListener{
             requireActivity().run {
-                startActivity(Intent(this,DonorActivity::class.java))
+                val intent =Intent(this,DonorActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
             }
         }
 
         binding.btnReqActivity.setOnClickListener{
             requireActivity().run {
-                startActivity(Intent(this,DonorRequestActivity::class.java))
+                val intent =Intent(this,DonorRequestActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
             }
         }
 
         binding.icNotification.setOnClickListener{
             requireActivity().run {
-                startActivity(Intent(this,NotificationActivity::class.java))
+                val intent =Intent(this,NotificationActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
             }
         }
 
