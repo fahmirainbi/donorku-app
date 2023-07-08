@@ -72,6 +72,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="20dp"
+
             android:src="@drawable/ic_edit" />
 
     </LinearLayout>
