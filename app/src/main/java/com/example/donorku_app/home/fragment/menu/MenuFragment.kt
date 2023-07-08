@@ -25,6 +25,7 @@ class MenuFragment : Fragment() {
     private lateinit var editProfileBtn: ImageView
     private var userNameTextView: TextView? = null
     private var userPhoneTextView: TextView? = null
+    private var userPointTextView: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +62,12 @@ class MenuFragment : Fragment() {
 
         userNameTextView = view?.findViewById(R.id.userNameTextViewInMenu)
         userPhoneTextView = view?.findViewById(R.id.userPhoneTextViewInMenu)
+        userPointTextView = view?.findViewById(R.id.userPointTextView)
         if(user != null){
             val jsonObject = JsonParser.parseString(user).asJsonObject
             userNameTextView?.setText(jsonObject.get("name").asString)
             userPhoneTextView?.setText(jsonObject.get("no_telp").asString)
+            userPointTextView?.setText(jsonObject.get("poin_donor").asString)
         }
     }
 

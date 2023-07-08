@@ -57,12 +57,12 @@ interface Api {
     //Kegiatan Donor Darah
     @GET("jadwal-kegiatan-donor")
     fun jadwalGet(
-        @Header("Authorization") token:String?,
+        @Header("Authorization") token:String?
     ): Call<JsonElement>
 
     //Stock Kantung Darah
     @GET("stok-darah")
-    fun getStok( @Header("Authorization") token:String?,
+    fun getStok( @Header("Authorization") token:String?
     ): Call<JsonElement>
 
     //Info Darah Darurat
@@ -77,4 +77,8 @@ interface Api {
     fun activityRequest(
         @Body activityRequest: ActivityRequest, @Header("Authorization") token:String
     ): Call<ActivityRequest>
+
+    //notifikasi
+    @GET("notifikasi")
+    fun getnotifikasi(@Header("Authorization")token: String?):Call<JsonElement>
 }
