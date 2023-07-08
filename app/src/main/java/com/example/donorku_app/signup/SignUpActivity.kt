@@ -3,11 +3,10 @@ package com.example.donorku_app.signup
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.donorku_app.api.ApiConfig
-import com.example.donorku_app.api.model.ResponseModel
 import com.example.donorku_app.databinding.ActivitySignUpBinding
-import com.example.donorku_app.home.HomeActivity
 import com.example.donorku_app.login.LoginActivity
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -26,7 +25,8 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
         binding.btnDaftar.setOnClickListener {
-
+            startActivity(Intent(this,LoginActivity::class.java))
+            Toast.makeText(this,"Anda berhasil daftar",Toast.LENGTH_LONG).show()
             enableButton()
         }
     }
@@ -62,16 +62,8 @@ class SignUpActivity : AppCompatActivity() {
             binding.etPasswordSignup.text.toString(),
             binding.etPasswordConfirmation.text.toString()
 
-        ).enqueue(object : Callback<ResponseModel> {
-            override fun onResponse(call: Call<ResponseModel>, response: Response<ResponseModel>) {
-
-
-                val respon = response.body()!!
-
-                val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
+        ).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Toast.makeText(
                     this@SignUpActivity,
                     "Anda berhasil daftar",
@@ -80,9 +72,10 @@ class SignUpActivity : AppCompatActivity() {
                     .show()
             }
 
-            override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
-                Toast.makeText(this@SignUpActivity, "Error : " + t.message, Toast.LENGTH_SHORT)
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Toast.makeText(this@SignUpActivity, "Anda gagal daftar", Toast.LENGTH_SHORT)
                     .show()
+                Log.e("daftar"," Gagal daftar karena :" + t.message)
             }
 
         })

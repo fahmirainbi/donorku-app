@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Donorkuapp"
-        tools:targetApi="31">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="33">
         <activity
             android:name=".coupondonorku.CouponDonorkuActivity"
             android:exported="false" />

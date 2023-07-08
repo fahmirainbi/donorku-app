@@ -80,7 +80,7 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/iv_darah_a"
+                    android:id="@+id/tvA"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -127,7 +127,7 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/iv_darah_b"
+                    android:id="@+id/tvB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -182,7 +182,7 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/iv_darah_ab"
+                    android:id="@+id/tvAB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -229,7 +229,7 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/iv_darah_o"
+                    android:id="@+id/tvO"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"

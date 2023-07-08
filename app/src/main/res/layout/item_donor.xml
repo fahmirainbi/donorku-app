@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/cvDonor">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +14,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/btn_faq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -30,7 +31,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/et_organisasi"
+                    android:id="@+id/tvOrganisasi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -40,7 +41,7 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/et_jadwal"
+                    android:id="@+id/tvJadwal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -50,7 +51,7 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/et_alamat"
+                    android:id="@+id/tvAlamat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"

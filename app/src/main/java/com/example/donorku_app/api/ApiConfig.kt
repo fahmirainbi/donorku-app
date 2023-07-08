@@ -1,10 +1,13 @@
 package com.example.donorku_app.api
 
+import android.app.IntentService
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
@@ -30,5 +33,5 @@ object ApiConfig {
                 .build()
         }
     val instanceRetrofit : Api
-    get() = client.create(Api::class.java)
+        get() = client.create(Api::class.java)
 }

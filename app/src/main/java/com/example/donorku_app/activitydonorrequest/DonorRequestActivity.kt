@@ -1,15 +1,35 @@
 package com.example.donorku_app.activitydonorrequest
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.DatePicker
+import android.widget.TimePicker
+import android.widget.Toast
 import com.example.donorku_app.databinding.ActivityDonorRequestBinding
 import com.example.donorku_app.home.HomeActivity
 import java.util.Calendar
 
-class DonorRequestActivity : AppCompatActivity() {
+class DonorRequestActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,AddContentPresenter.Listener,
+    TimePickerDialog.OnTimeSetListener {
     private lateinit var binding: ActivityDonorRequestBinding
+    private lateinit var addContentPresenter:AddContentPresenter
+
+    var day = 0
+    var month = 0
+    var year = 0
+    var hour = 0
+    var minute = 0
+    var second = 0
+
+    var savedDay = 0
+    var savedMonth = 0
+    var savedYear = 0
+    var savedHour = 0
+    var savedMinute = 0
+    var savedSecond = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityDonorRequestBinding.inflate(layoutInflater)
@@ -17,22 +37,106 @@ class DonorRequestActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        pickDate()
 
-        binding.pickDateBtn.setOnClickListener {
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener{view,mYear,mMonth,mDay->
-                binding.dateTv.setText(""+mDay+"/"+mMonth+"/"+mYear)
-            },year,month,day)
-            dpd.show()
+
+        binding.btnRegistrationBlood.setOnClickListener {
+            setupListener()
+            setupDataComponent()
         }
 
-        binding.ivBack.setOnClickListener{
-                startActivity(Intent(this, HomeActivity::class.java))
+        binding.ivBack.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
         }
+
 
     }
+//    set Date and Time
+    private fun getDateTimeCalendar(){
+        val cal = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+        hour = cal.get(Calendar.HOUR)
+        minute = cal.get(Calendar.MINUTE)
+        second = cal.get(Calendar.SECOND)
+    }
+    private fun pickDate(){
+        binding.pickDateBtn.setOnClickListener{
+            getDateTimeCalendar()
+            DatePickerDialog(this,this,year,month,day).show()
+        }
+    }
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        savedDay = dayOfMonth
+        savedMonth = month
+        savedYear = year
+
+        getDateTimeCalendar()
+        TimePickerDialog(this,this,hour,minute,true).show()
+    }
+    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+    savedHour = hourOfDay
+        savedMinute= minute
+        binding.dateTv.text = "$savedDay/$savedMonth/$savedYear    $savedHour:$savedMinute:00"
+    }
+
+    private fun setupDataComponent(){
+        addContentPresenter = AddContentPresenter(this@DonorRequestActivity)
+    }
+
+    override fun onAddContentSuccess(sccMessage: String) {
+    Toast.makeText(this,sccMessage,Toast.LENGTH_SHORT).show()
+        finish()
+
+    }
+
+    override fun onAddContentFailure(errMessage: String) {
+    Toast.makeText(this,errMessage,Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setupListener(){
+        binding.btnRegistrationBlood.setOnClickListener{
+            val nama = binding.etNama.text.toString().trim()
+            val organisasi = binding.etOrganisasi.text.toString().trim()
+            val tanggal = binding.dateTv.text.toString().trim()
+            val nomor = binding.etTelepon.text.toString().trim()
+            val alamat = binding.etAlamat.text.toString().trim()
+
+            when {
+                (nama.isEmpty()) -> {
+                    binding.etNama.error = "Kolom Kosong"
+                    binding.etNama.requestFocus()
+                }
+                (organisasi.isEmpty()) -> {
+                    binding.etOrganisasi.error = "Kolom Kosong"
+                    binding.etOrganisasi.requestFocus()
+                }
+                (tanggal.isEmpty()) -> {
+                    binding.dateTv.error = "Kolom Kosong"
+                    binding.dateTv.requestFocus()
+                }
+                (nomor.isEmpty()) -> {
+                    binding.etTelepon.error = "Kolom Kosong"
+                    binding.etTelepon.requestFocus()
+                }
+                (alamat.isEmpty()) -> {
+                    binding.etAlamat.error = "Kolom Kosong"
+                    binding.etAlamat.requestFocus()
+                }
+
+
+            }
+
+            val intent = Intent(this@DonorRequestActivity,HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+
+            val posContent = Activity(nama, organisasi,tanggal,nomor,alamat)
+            addContentPresenter.createContent(posContent)
+        }
+    }
+
 
 }

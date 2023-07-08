@@ -49,57 +49,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/semibold"
-                    android:text="Nama"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_name"
-                    android:layout_width="350dp"
-                    android:layout_height="47dp"
-                    android:padding="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/btn_background4"
-                    android:elevation="2dp"
-                    android:fontFamily="@font/medium"
-                    android:inputType="text"
-                    android:shadowColor="@color/black"
-                    android:shadowRadius="@integer/material_motion_duration_long_2"
-                    android:textColor="@color/grey_font"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/semibold"
-                    android:text="Jenis Kelamin"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_sex"
-                    android:padding="10dp"
-                    android:layout_width="350dp"
-                    android:layout_height="47dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/btn_background4"
-                    android:elevation="2dp"
-                    android:fontFamily="@font/medium"
-                    android:inputType="text"
-                    android:shadowColor="@color/black"
-                    android:shadowRadius="@integer/material_motion_duration_long_2"
-                    android:textColor="@color/grey_font"
-                    android:textSize="18dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,7 +73,7 @@
                     android:inputType="text"
                     android:shadowColor="@color/black"
                     android:shadowRadius="@integer/material_motion_duration_long_2"
-                    android:text="Cuci Darah"
+                    android:hint="1"
                     android:padding="10dp"
                     android:textColor="@color/grey_font"
                     android:textSize="18dp" />
@@ -191,33 +141,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="30dp"
                     android:fontFamily="@font/semibold"
-                    android:text="Kebutuhan Kantong Darah"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_request_blood"
-                    android:layout_width="350dp"
-                    android:layout_height="47dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/btn_background4"
-                    android:elevation="2dp"
-                    android:fontFamily="@font/medium"
-                    android:inputType="text"
-                    android:shadowColor="@color/black"
-                    android:padding="10dp"
-                    android:text="2 Kantung Darah"
-                    android:shadowRadius="@integer/material_motion_duration_long_2"
-                    android:textColor="@color/grey_font"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/semibold"
                     android:text="Deskripsi"
                     android:textColor="@color/black"
                     android:textSize="18dp" />
@@ -233,7 +156,7 @@
                     android:fontFamily="@font/medium"
                     android:inputType="text"
                     android:shadowColor="@color/black"
-                    android:text="Dibutuhkan segera"
+                    android:hint="Dibutuhkan segera"
                     android:padding="10dp"
                     android:shadowRadius="@integer/material_motion_duration_long_2"
                     android:textColor="@color/grey_font"

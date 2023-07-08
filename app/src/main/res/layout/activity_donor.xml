@@ -12,51 +12,51 @@
         android:layout_height="match_parent">
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:background="@drawable/btn_background1"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:background="@drawable/btn_background1"
+                android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_back" />
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_back" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/semibold"
-            android:text="Kegiatan Donor"
-            android:textColor="@color/white"
-            android:textSize="22dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/semibold"
+                    android:text="Kegiatan Donor"
+                    android:textColor="@color/white"
+                    android:textSize="22dp" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <ImageView
-        android:layout_width="290dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:src="@drawable/img_activity2" />
+            <ImageView
+                android:layout_width="290dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/img_activity2" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_donor"
-        tools:listitem="@layout/item_donor"
-        android:layout_margin="20dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDonor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_donor" />
 
-</LinearLayout>
-
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
