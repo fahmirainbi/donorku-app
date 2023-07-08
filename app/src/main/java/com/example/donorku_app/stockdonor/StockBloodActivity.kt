@@ -28,30 +28,5 @@ class StockBloodActivity : AppCompatActivity() {
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }
-    fun getdatadonor(responModel: StockBlood){
 
-
-        ApiConfig.instance.getStok().enqueue(object : Callback<ArrayList<ResponseModel>>{
-            override fun onResponse(
-                call: Call<ArrayList<ResponseModel>>,
-                response: Response<ArrayList<ResponseModel>>
-            ) {
-                var darahA = findViewById<TextView>(R.id.tvA)
-                var darahB = findViewById<TextView>(R.id.tvB)
-                var darahAB = findViewById<TextView>(R.id.tvAB)
-                var darahO = findViewById<TextView>(R.id.tvO)
-
-                darahA.text = responModel.stok_darah_a.toString()
-                darahB.text = responModel.stok_darah_b.toString()
-                darahAB.text = responModel.stok_darah_ab.toString()
-                darahO.text = responModel.stok_darah_o.toString()
-            }
-
-            override fun onFailure(call: Call<ArrayList<ResponseModel>>, t: Throwable) {
-            }
-
-        } )
-
-
-    }
 }

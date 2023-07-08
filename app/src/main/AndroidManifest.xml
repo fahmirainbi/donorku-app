@@ -18,6 +18,12 @@
             android:name=".coupondonorku.CouponDonorkuActivity"
             android:exported="false" />
         <activity
+            android:name=".home.fragment.menu.EditPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.fragment.menu.EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".donoremergency.DonorEmergencyActivity"
             android:exported="false" />
         <activity
@@ -45,7 +51,7 @@
             android:name=".login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".landingpage.LandingPageActivity"
+            android:name=".profile.landingpage.LandingPageActivity"
             android:exported="false" />
         <activity
             android:name=".splashscreen.SplashScreenActivity"

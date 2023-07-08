@@ -75,6 +75,6 @@ interface Api {
 
     @POST("pengajuan-kegiatan-donor")
     fun activityRequest(
-        @Body activity: Activity, @Header("Authorization") token:String
-    ): Call<Activity>
+        @Body activityRequest: ActivityRequest, @Header("Authorization") token:String
+    ): Call<ActivityRequest>
 }

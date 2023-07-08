@@ -1,4 +1,4 @@
-package com.example.donorku_app.landingpage
+package com.example.donorku_app.profile.landingpage
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -1,4 +1,4 @@
-package com.example.donorku_app.landingpage
+package com.example.donorku_app.profile.landingpage
 
 import android.content.Intent
 import android.os.Bundle

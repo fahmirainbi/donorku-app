@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
+import com.example.donorku_app.api.model.ActivityRequest
 import com.example.donorku_app.databinding.ActivityDonorRequestBinding
 import com.example.donorku_app.home.HomeActivity
 import java.util.Calendar
@@ -133,7 +134,7 @@ class DonorRequestActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             startActivity(intent)
             finish()
 
-            val posContent = Activity(nama, organisasi,tanggal,nomor,alamat)
+            val posContent = ActivityRequest(nama, organisasi,tanggal,nomor,alamat)
             addContentPresenter.createContent(posContent)
         }
     }
