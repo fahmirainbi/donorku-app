@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Donorkuapp"
         android:usesCleartextTraffic="true"
+    android:enableOnBackInvokedCallback="true"
         tools:targetApi="33">
         <activity
             android:name=".faq.FaqActivity"
