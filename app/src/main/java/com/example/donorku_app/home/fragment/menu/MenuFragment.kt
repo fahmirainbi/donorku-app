@@ -12,11 +12,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.donorku_app.R
+import com.example.donorku_app.bloodrequest.BloodRequestActivity
+import com.example.donorku_app.databinding.FragmentHomeBinding
+import com.example.donorku_app.databinding.FragmentMenuBinding
+import com.example.donorku_app.faq.FaqActivity
 import com.example.donorku_app.login.LoginActivity
 import com.google.gson.JsonParser
 
 class MenuFragment : Fragment() {
     // TODO: Rename and change types of parameters
+    private lateinit var binding: FragmentMenuBinding
     private var user: String? = null
     private var token: String? = null
 
@@ -29,17 +34,19 @@ class MenuFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
-        user    = sharedPreferences.getString("user", null)
-        token   = sharedPreferences.getString("token", null)
+        val sharedPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
+        user = sharedPreferences.getString("user", null)
+        token = sharedPreferences.getString("token", null)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentMenuBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,10 +67,21 @@ class MenuFragment : Fragment() {
             startActivity(Intent(requireContext(), EditProfileActivity::class.java))
         }
 
+        binding.btnFaq.setOnClickListener {
+            requireActivity().run {
+                val intent =Intent(this, FaqActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+
+
         userNameTextView = view?.findViewById(R.id.userNameTextViewInMenu)
         userPhoneTextView = view?.findViewById(R.id.userPhoneTextViewInMenu)
         userPointTextView = view?.findViewById(R.id.userPointTextView)
-        if(user != null){
+        if (user != null) {
             val jsonObject = JsonParser.parseString(user).asJsonObject
             userNameTextView?.setText(jsonObject.get("name").asString)
             userPhoneTextView?.setText(jsonObject.get("no_telp").asString)
@@ -71,8 +89,12 @@ class MenuFragment : Fragment() {
         }
     }
 
-    private fun logout(){
-        val sharedPreferences: SharedPreferences = requireContext().applicationContext.getSharedPreferences("session", Context.MODE_PRIVATE)
+    private fun logout() {
+        val sharedPreferences: SharedPreferences =
+            requireContext().applicationContext.getSharedPreferences(
+                "session",
+                Context.MODE_PRIVATE
+            )
         val editorSharedPreferences = sharedPreferences.edit()
         editorSharedPreferences.clear()
         editorSharedPreferences.apply()

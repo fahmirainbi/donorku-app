@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
         <activity
+            android:name=".faq.FaqActivity"
+            android:exported="false" />
+        <activity
             android:name=".coupondonorku.CouponDonorkuActivity"
             android:exported="false" />
         <activity

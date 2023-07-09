@@ -57,28 +57,34 @@ interface Api {
     //Kegiatan Donor Darah
     @GET("jadwal-kegiatan-donor")
     fun jadwalGet(
-        @Header("Authorization") token:String?
+        @Header("Authorization") token: String?
     ): Call<JsonElement>
 
     //Stock Kantung Darah
     @GET("stok-darah")
-    fun getStok( @Header("Authorization") token:String?
+    fun getStok(
+        @Header("Authorization") token: String?
     ): Call<JsonElement>
 
     //Info Darah Darurat
 //Permintaan Darah
     @POST("permintaan-darah")
-    fun donorRequest(@Body bloodRequestPost: BloodRequestPost, @Header("Authorization") token: String
+    fun donorRequest(
+        @Body bloodRequestPost: BloodRequestPost, @Header("Authorization") token: String
     ): Call<BloodRequestPost>
 
     //Pengajuan Kegiatan Donor
 
     @POST("pengajuan-kegiatan-donor")
     fun activityRequest(
-        @Body activityRequest: ActivityRequest, @Header("Authorization") token:String
+        @Body activityRequest: ActivityRequest, @Header("Authorization") token: String
     ): Call<ActivityRequest>
 
     //notifikasi
     @GET("notifikasi")
-    fun getnotifikasi(@Header("Authorization")token: String?):Call<JsonElement>
+    fun getnotifikasi(@Header("Authorization") token: String?): Call<JsonElement>
+
+    //faq
+    @GET("faq")
+    fun getFaq(@Header("Authorization") token: String?): Call<JsonElement>
 }
