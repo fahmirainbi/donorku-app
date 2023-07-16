@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,7 +60,7 @@ class DonorEmergencyActivity : AppCompatActivity() {
 
     private fun getData() {
         listData.clear()
-        ApiConfig.instanceRetrofit.jadwalGet(
+        ApiConfig.instanceRetrofit.infoGet(
             "Bearer " + token
         ).enqueue(object : Callback<JsonElement> {
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
@@ -99,6 +100,9 @@ class RecyclerViewAdapter(private val context: Context?, val itemList: List<Json
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
         holder.imageView.setImageResource(R.drawable.ic_emergency)
+        holder.judulView.setText(item.get("organisasi")?.asString)
+        holder.tanggalView.setText(item.get("jadwal_mulai_donor")?.asString!!.subSequence(0, 10).toString() + " - " + item.get("jadwal_selesai_donor")?.asString?.subSequence(0, 10))
+        holder.deskripsiView.setText(item.get("deskripsi_acara")?.asString)
 
         holder.itemView.setOnClickListener {
             Toast.makeText(context,item.toString(),Toast.LENGTH_LONG).show()
@@ -111,5 +115,8 @@ class RecyclerViewAdapter(private val context: Context?, val itemList: List<Json
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageInfoDarah)
+        val judulView: TextView = itemView.findViewById(R.id.judulinfo)
+        val tanggalView: TextView = itemView.findViewById(R.id.tanggalItemInfo)
+        val deskripsiView: TextView = itemView.findViewById(R.id.alamatInfo)
     }
 }

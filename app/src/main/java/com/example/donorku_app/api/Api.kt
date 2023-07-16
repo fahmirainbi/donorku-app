@@ -60,6 +60,13 @@ interface Api {
         @Header("Authorization") token: String?
     ): Call<JsonElement>
 
+    //Kegiatan Donor Darah
+    @GET("info-darah-darurat")
+    fun infoGet(
+        @Header("Authorization") token: String?
+    ): Call<JsonElement>
+
+
     //Stock Kantung Darah
     @GET("stok-darah")
     fun getStok(
@@ -77,7 +84,7 @@ interface Api {
 
     @POST("pengajuan-kegiatan-donor")
     fun activityRequest(
-        @Body activityRequest: ActivityRequest, @Header("Authorization") token: String
+        @Body activityRequest: ActivityRequest, @Header("Authorization") token: String?
     ): Call<ActivityRequest>
 
     //notifikasi
@@ -87,4 +94,21 @@ interface Api {
     //faq
     @GET("faq")
     fun getFaq(@Header("Authorization") token: String?): Call<JsonElement>
+
+    //    barang
+    @GET("barang")
+    fun getBarang(@Header("Authorization") token: String?): Call<JsonElement>
+
+//    transaksi
+
+    @GET("tansaksi/{id}")
+    fun getCoupon(@Header("Authorization") token: String?): Call<JsonElement>
+
+    @Headers("Content-Type: application/json")
+    @POST("transaksi")
+    fun postKuppon(
+        @Body changePointPost: ChangePointPost, @Header("Authorization") token: String
+    ): Call<ChangePointPost>
+
+
 }

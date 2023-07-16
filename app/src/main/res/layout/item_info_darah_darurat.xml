@@ -37,6 +37,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/judulinfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold"
@@ -45,11 +46,11 @@
                     android:textSize="14dp" />
 
                 <TextView
-                    android:id="@+id/tanggalItemKegiatanDonor"
+                    android:id="@+id/tanggalItemInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold"
-                    android:text="Kebutuhan: 2 kantung"
+                    android:text="tanggal"
                     android:textSize="12dp" />
             </LinearLayout>
 
@@ -72,11 +73,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold"
-                    android:text="Nama Pasien"
+                    android:text="Alamat"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
 
                 <TextView
+                    android:id="@+id/alamatInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold"
@@ -91,20 +93,7 @@
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:text="Catatan"
-                    android:textColor="@color/black"
-                    android:textSize="12dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:text="Dibutuhkan Segera"
-                    android:textSize="12dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -114,51 +103,6 @@
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:text="Jenis Kelamin"
-                    android:textColor="@color/black"
-                    android:textSize="12dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:text="Laki - Laki"
-                    android:textSize="12dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:text="No. Telepon Pasien / Keluarga"
-                    android:textColor="@color/black"
-                    android:textSize="12dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:text="0852 - xxxx - xxxx"
-                    android:textSize="12dp" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -167,28 +111,7 @@
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:text="Kebutuhan Darah"
-                    android:textColor="@color/black"
-                    android:textSize="12dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:text="Korban Kecelakaan"
-                    android:textSize="12dp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,3 +136,4 @@
 
 
 </androidx.cardview.widget.CardView>
+

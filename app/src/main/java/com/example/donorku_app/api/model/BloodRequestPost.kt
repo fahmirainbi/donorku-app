@@ -7,11 +7,11 @@ data class BloodRequestPost(
     @SerializedName("user")
     val id : Int,
     @SerializedName("kebutuhan_darah")
-    val kebutuhanDarah: String,
+    val kebutuhanDarah: String?,
     @SerializedName("tipe_darah")
-    val tipeDarah: String,
+    val tipeDarah: String?,
     @SerializedName("no_telp_pasien_keluarga")
-    val noTelpPasienKeluarga: String,
+    val noTelpPasienKeluarga: String?,
     @SerializedName("catatan")
-    val catatan: String,
+    val catatan: String?,
 )

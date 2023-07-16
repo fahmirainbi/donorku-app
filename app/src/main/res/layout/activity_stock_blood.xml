@@ -35,15 +35,15 @@
 
     <ImageView
         android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:src="@drawable/image_baner" />
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:src="@drawable/img_activity1" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewStokDonor"
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
+            android:layout_marginLeft="-25dp"
             android:layout_height="640dp"
             android:layout_marginTop="20dp"
             android:paddingBottom="300dp"

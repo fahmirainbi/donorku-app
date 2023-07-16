@@ -96,6 +96,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.saveBtn.setOnClickListener{
            updateUser()
+
         }
     }
 

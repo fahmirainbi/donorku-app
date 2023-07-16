@@ -13,10 +13,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.donorku_app.R
-import com.example.donorku_app.bloodrequest.BloodRequestActivity
-import com.example.donorku_app.databinding.FragmentHomeBinding
 import com.example.donorku_app.databinding.FragmentMenuBinding
 import com.example.donorku_app.faq.FaqActivity
+import com.example.donorku_app.home.fragment.menu.Transaksi.ChangePointActivity
 import com.example.donorku_app.login.LoginActivity
 import com.google.gson.JsonParser
 
@@ -69,6 +68,15 @@ class MenuFragment : Fragment() {
         }
 
         binding.linkWa.movementMethod = LinkMovementMethod.getInstance()
+
+        binding.btnPoin.setOnClickListener {
+            requireActivity().run {
+                val intent =Intent(this, ChangePointActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                startActivity(intent)
+                finish()
+            }
+        }
 
         binding.btnFaq.setOnClickListener {
             requireActivity().run {
