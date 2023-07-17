@@ -1,16 +1,20 @@
 package com.example.donorku_app.coupondonorku
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.donorku_app.R
@@ -19,6 +23,8 @@ import com.example.donorku_app.databinding.ActivityCouponDonorkuBinding
 import com.example.donorku_app.databinding.ActivityDonorBinding
 import com.example.donorku_app.donoractivity.RecyclerViewAdapter
 import com.example.donorku_app.home.HomeActivity
+import com.example.donorku_app.home.fragment.menu.Transaksi.BottomSheetPoinFragment
+import com.example.donorku_app.home.fragment.menu.Transaksi.ChangePointActivity
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -45,7 +51,7 @@ class CouponDonorkuActivity : AppCompatActivity() {
         }
 
         layoutManager = LinearLayoutManager(this)
-        adapter = RecyclerViewkuponAdapter(this, listData)
+        adapter = RecyclerViewkuponAdapter(supportFragmentManager,this, listData)
 
         val sharedPreferences: SharedPreferences = applicationContext.getSharedPreferences("session", Context.MODE_PRIVATE)
         user    =  JsonParser.parseString(sharedPreferences.getString("user", null)).asJsonObject
@@ -61,8 +67,9 @@ class CouponDonorkuActivity : AppCompatActivity() {
 
     private fun getData() {
         listData.clear()
-        ApiConfig.instanceRetrofit.getCoupon(
-            "Bearer " + token
+        ApiConfig.instanceRetrofit.getDataCoupon(
+            "Bearer " + token,
+            user.get("id")?.asInt
         ).enqueue(object : Callback<JsonElement> {
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                 val json = response.body()?.asJsonObject
@@ -87,11 +94,12 @@ class CouponDonorkuActivity : AppCompatActivity() {
     }
 }
 
-class RecyclerViewkuponAdapter(private val context: Context?, val itemList:List<JsonObject>):RecyclerView.Adapter<RecyclerViewkuponAdapter.ViewHolder>(){
+class RecyclerViewkuponAdapter(private val fragmentManager: FragmentManager, private val context: Context?, val itemList:List<JsonObject>):RecyclerView.Adapter<RecyclerViewkuponAdapter.ViewHolder>(){
     inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
         val namaBarang:TextView = itemView.findViewById(R.id.tvNamaBarang)
         val batasPenukaran:TextView = itemView.findViewById(R.id.tvBatasPenukaran)
-        val gambar:ImageView = itemView.findViewById(R.id.imgPoin)
+        val status:TextView = itemView.findViewById(R.id.tvStatus)
+        val gambar:ImageView = itemView.findViewById(R.id.imgkupon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -106,10 +114,73 @@ class RecyclerViewkuponAdapter(private val context: Context?, val itemList:List<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val item = itemList[position]
-        holder.namaBarang.setText(item.get("nama_barang")?.asString)
-        holder.batasPenukaran.setText(item.get("batas_penukaran")?.asString)
-        holder.gambar.setImageResource(R.drawable.ic_coupon)
+        val barang = item.get("barang")
+        if (!barang.isJsonNull) {
+            holder.namaBarang.setText(barang.asString)
+            holder.batasPenukaran.setText(item.get("batas_penukaran")?.asString)
+            holder.status.setText(item.get("status_penukaran")?.asString)
+            holder.gambar.setImageResource(R.drawable.ic_coupon)
+
+
+
+            holder.itemView.setOnClickListener {
+                val fragment = BottomSheetCouponFragment()
+                val bundle = Bundle()
+                bundle.putParcelable(
+                    ChangePointActivity.INTENT_PARCELABLE,ParcelableJsonObjectCoupon(item)
+                )
+                fragment.arguments = bundle
+                fragment.show(fragmentManager, "BottomSheetDialog")
+            }
+        } else {
+
+
+        }
+
+
 
     }
 
+}
+
+class ParcelableJsonObjectCoupon(val jsonObject: JsonObject?) : Parcelable {
+
+    constructor(parcel: Parcel) : this(parcel.readString()?.let { com.google.gson.JsonParser.parseString(it).asJsonObject })
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(jsonObject?.toString())
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ParcelableJsonObjectCoupon
+
+        if (jsonObject != other.jsonObject) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return jsonObject?.hashCode() ?: 0
+    }
+
+    override fun toString(): String {
+        return jsonObject?.toString() ?: ""
+    }
+
+    companion object CREATOR : Parcelable.Creator<ParcelableJsonObjectCoupon> {
+        override fun createFromParcel(parcel: Parcel): ParcelableJsonObjectCoupon {
+            return ParcelableJsonObjectCoupon(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ParcelableJsonObjectCoupon?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

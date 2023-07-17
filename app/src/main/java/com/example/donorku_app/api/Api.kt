@@ -109,8 +109,6 @@ interface Api {
 
 //    transaksi
 
-    @GET("tansaksi/{id}")
-    fun getCoupon(@Header("Authorization") token: String?): Call<JsonElement>
 
     @Headers("Content-Type: application/json")
     @POST("transaksi")
@@ -118,10 +116,10 @@ interface Api {
         @Body changePointPost: ChangePointPost, @Header("Authorization") token: String
     ): Call<ChangePointPost>
 
-    @PUT("users/{id}")
-    fun updatePoin(
-        @Body poinDonorPost: PoinDonorPost, @Header("Authorization") token: String
-    ): Call<PoinDonorPost>
-
+    @GET("transaksi")
+    fun getDataCoupon(
+        @Header("Authorization") token: String?,
+        @Query("user") users:Int?
+    ):Call<JsonElement>
 
 }

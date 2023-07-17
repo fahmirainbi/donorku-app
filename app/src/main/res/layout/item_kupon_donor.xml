@@ -3,48 +3,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginBottom="10dp"
-    android:layout_marginTop="10dp"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="3dp"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
-    android:layout_height="wrap_content">
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="3dp">
 
-
-    <ImageView
-        android:id="@+id/imgkupon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="start"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        tools:srcCompat="@drawable/ic_poin" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="60dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:padding="5dp">
 
-        <TextView
-            android:id="@+id/tvNamaBarang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/semibold"
-            android:text="PMI Ranting Sukajadi"
-            android:textColor="@color/black"
+        <ImageView
+            android:id="@+id/imgkupon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:textSize="14dp" />
+            android:layout_marginRight="15dp"
+            tools:srcCompat="@drawable/ic_poin" />
 
-
-        <TextView
-            android:id="@+id/tvBatasPenukaran"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="batas penukaran"
-            android:textColor="@color/red"
-            android:textSize="15dp" />
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNamaBarang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/semibold"
+                android:text="PMI Ranting Sukajadi"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="batas penukaran :"
+                    android:textColor="@color/red"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvBatasPenukaran"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="batas penukaran"
+                    android:textColor="@color/red"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="batas penukaran"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_background7"
+                    android:padding="5dp"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
