@@ -14,12 +14,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.donorku_app.R
+import com.example.donorku_app.api.ApiConfig
 import com.example.donorku_app.api.model.ChangePointPost
+import com.example.donorku_app.api.model.PoinDonorPost
 import com.example.donorku_app.coupondonorku.CouponDonorkuActivity
 import com.example.donorku_app.databinding.FragmentBottomSheetPoinBinding
 import com.example.donorku_app.home.fragment.menu.Transaksi.ChangePointActivity.Companion.INTENT_PARCELABLE
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -32,6 +39,7 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
 
     private var user: String? = null
     private var token: String? = null
+    private lateinit var userid: JsonObject
 
     private var userPointTextView: TextView? = null
 
@@ -40,7 +48,9 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
         val sharedPreferences: SharedPreferences =
             requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
         user = sharedPreferences.getString("user", null)
+        userid    =  JsonParser.parseString(sharedPreferences.getString("user", null)).asJsonObject
         token = sharedPreferences.getString("token", null)
+
 
     }
 
@@ -90,6 +100,7 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
                 } else {
                     setupDataComponent()
                     setupListener()
+                    updatePoinDonor()
                     allertDialogSucces()
 
                 }
@@ -99,7 +110,8 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
     }
 
     private fun setupDataComponent() {
-        bottomSheetPoinPresenter = BottomSheetPoinPresenter(requireContext(),this@BottomSheetPoinFragment)
+        bottomSheetPoinPresenter =
+            BottomSheetPoinPresenter(requireContext(), this@BottomSheetPoinFragment)
     }
 
     override fun onAddContentSuccess(sccMessage: String) {
@@ -117,7 +129,7 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
         val token = sharedPreferences.getString("token", null)
         val parcelableData = arguments?.getParcelable<ParcelableJsonObject>(INTENT_PARCELABLE)
         val item = parcelableData?.jsonObject
-        if (token != null && item !=null) {
+        if (token != null && item != null) {
 
 
             val jsonObject = JsonParser.parseString(user).asJsonObject
@@ -133,13 +145,17 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
             val batasPenukaran = calculateBatasPenukaran(clickedDateTime)
 
 
+
+
             if (item != null) {
                 val title = item.get("id").asInt
                 val posContent = ChangePointPost(user1, title, kodeDonor, batasPenukaran, status)
                 bottomSheetPoinPresenter.makeContent(posContent)
+
             }
         }
     }
+
 
     fun calculateBatasPenukaran(clickedDateTime: Date): String {
         val isWithinSevenDays = isWithinSevenDays(clickedDateTime)
@@ -170,6 +186,35 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
         return calendar.time
+    }
+
+    private fun updatePoinDonor() {
+        val parcelableData = arguments?.getParcelable<ParcelableJsonObject>(INTENT_PARCELABLE)
+        val item = parcelableData?.jsonObject
+        val descriptionku = item?.get("harga_kupon")?.asInt
+        val jsonObject = JsonParser.parseString(user).asJsonObject
+        val poinDonorku = jsonObject.get("poin_donor").asInt
+        val sisaPoin = poinDonorku - descriptionku!!
+        ApiConfig.instanceRetrofit.minPoin(
+            "Bearer " + token,
+            userid.get("id")?.asInt,
+            sisaPoin
+        ).enqueue(object : Callback<JsonElement> {
+            override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                if (response.isSuccessful) {
+                    onAddContentSuccess("Data Sukses Dikirim")
+                } else {
+                    onAddContentFailure("Gagal mengirim data")
+                }
+
+            }
+
+            override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                onAddContentFailure("Data Tidak Sesuai" + t.message)
+                Log.d("Data", "Data Tidak sesuai" + t.message)
+            }
+
+        })
     }
 
 

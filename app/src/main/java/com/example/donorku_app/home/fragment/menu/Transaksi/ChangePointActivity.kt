@@ -50,6 +50,7 @@ class ChangePointActivity : AppCompatActivity() {
 
         binding.ivBack.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
+
         }
 
         layoutManager = LinearLayoutManager(this)
@@ -101,6 +102,7 @@ class ChangePointActivity : AppCompatActivity() {
 
         })
     }
+
 }
 
 class RecyclerViewPoinDonorAdapter(private val fragmentManager: FragmentManager, private val context: Context?, val itemList: List<JsonObject>) :

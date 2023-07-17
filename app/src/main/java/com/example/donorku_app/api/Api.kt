@@ -53,6 +53,14 @@ interface Api {
         @Field("golongan_darah") golongan_darah: String?,
     ): Call<JsonElement>
 
+    @FormUrlEncoded
+    @PUT("users/{id}")
+    fun minPoin(
+        @Header("Authorization") token: String?,
+        @Path("id") id: Int?,
+        @Field("poin_donor") poin_donor:Int?
+    ):Call<JsonElement>
+
 
     //Kegiatan Donor Darah
     @GET("jadwal-kegiatan-donor")
@@ -109,6 +117,11 @@ interface Api {
     fun postKuppon(
         @Body changePointPost: ChangePointPost, @Header("Authorization") token: String
     ): Call<ChangePointPost>
+
+    @PUT("users/{id}")
+    fun updatePoin(
+        @Body poinDonorPost: PoinDonorPost, @Header("Authorization") token: String
+    ): Call<PoinDonorPost>
 
 
 }
