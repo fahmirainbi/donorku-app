@@ -46,7 +46,7 @@ class DetailDonorActivity : AppCompatActivity() {
         val tanggal = intent.getStringExtra("tanggal")
         val deskripsi = intent.getStringExtra("deskripsi")
         val waktu = intent.getStringExtra("waktu")
-        val status = "Tidak Lolos"
+        val status = "tidak_lolos"
         var  userId = 0
 
 
