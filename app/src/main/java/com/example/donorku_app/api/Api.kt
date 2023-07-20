@@ -1,6 +1,5 @@
 package com.example.donorku_app.api
 
-import android.app.Activity
 import com.example.donorku_app.api.model.*
 import com.google.gson.JsonElement
 import okhttp3.ResponseBody
@@ -53,14 +52,21 @@ interface Api {
         @Field("golongan_darah") golongan_darah: String?,
     ): Call<JsonElement>
 
+    //    userGet
+    @GET("users")
+    fun getPoin(
+        @Header("Authorization") token: String?,
+        @Query("user") users: Int?
+    ): Call<JsonElement>
+
+    //  userPut
     @FormUrlEncoded
     @PUT("users/{id}")
     fun minPoin(
         @Header("Authorization") token: String?,
         @Path("id") id: Int?,
-        @Field("poin_donor") poin_donor:Int?
-    ):Call<JsonElement>
-
+        @Field("poin_donor") poin_donor: Int?
+    ): Call<JsonElement>
 
     //Kegiatan Donor Darah
     @GET("jadwal-kegiatan-donor")
@@ -82,6 +88,8 @@ interface Api {
     ): Call<JsonElement>
 
     //Info Darah Darurat
+
+
 //Permintaan Darah
     @POST("permintaan-darah")
     fun donorRequest(
@@ -94,6 +102,14 @@ interface Api {
     fun activityRequest(
         @Body activityRequest: ActivityRequest, @Header("Authorization") token: String?
     ): Call<ActivityRequest>
+
+    //Daftar Kegiatan Donor
+    @POST("jadwal-kegiatan-donor/{id}/add-pendonor")
+    fun daftarPost(
+        @Body registrationPost: RegistrationPost,
+        @Header("Authorization") token: String?,
+        @Path("id") id: Int?
+    ): Call<RegistrationPost>
 
     //notifikasi
     @GET("notifikasi")
@@ -108,8 +124,6 @@ interface Api {
     fun getBarang(@Header("Authorization") token: String?): Call<JsonElement>
 
 //    transaksi
-
-
     @Headers("Content-Type: application/json")
     @POST("transaksi")
     fun postKuppon(
@@ -119,7 +133,14 @@ interface Api {
     @GET("transaksi")
     fun getDataCoupon(
         @Header("Authorization") token: String?,
-        @Query("user") users:Int?
-    ):Call<JsonElement>
+        @Query("user") users: Int?
+    ): Call<JsonElement>
+
+    @GET("jadwal-kegiatan-donor/{id}")
+    fun getHistoryDonor(
+        @Header("Authorization") token: String?,
+        @Path("id") id: Int,
+        @Query("user") users: Int?
+    ): Call<JsonElement>
 
 }

@@ -50,14 +50,14 @@
         android:text="Kegiatan Donor Darah yang anda ikuti"
         android:textColor="@color/black"
         android:textSize="14dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewkuponDonor"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerHistory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/container"
         tools:ignore="MissingConstraints" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewkuponDonor"
+        android:id="@+id/recyclerHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="100dp"
@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ProgressBar
-        android:id="@+id/progressBarkuponDonor"
+        android:id="@+id/progressHistory"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:backgroundTintMode="add"

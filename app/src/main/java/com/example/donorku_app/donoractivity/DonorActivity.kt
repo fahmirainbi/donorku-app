@@ -11,6 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.donorku_app.R
@@ -86,6 +88,7 @@ class DonorActivity: AppCompatActivity(){
 
         })
     }
+
 }
 
 class RecyclerViewAdapter(private val context: Context?, val itemList: List<JsonObject>) :
@@ -106,13 +109,14 @@ class RecyclerViewAdapter(private val context: Context?, val itemList: List<Json
         holder.waktuView.setText(item.get("jadwal_selesai_donor")?.asString?.subSequence(11, 16).toString() + " - " + item.get("jadwal_selesai_donor")?.asString?.subSequence(11, 16))
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(context,item.toString(), Toast.LENGTH_LONG).show()
+            showDetail(item)
         }
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
+
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageItemKegiatanDonor)
@@ -122,5 +126,24 @@ class RecyclerViewAdapter(private val context: Context?, val itemList: List<Json
         val waktuView: TextView = itemView.findViewById(R.id.waktuItemKegiatanDonor)
     }
 
+    private fun showDetail(item: JsonObject) {
+        val judul = item.get("organisasi")?.asString
+        val tanggal = item.get("jadwal_mulai_donor")?.asString!!.subSequence(0, 10).toString() + " - " + item.get("jadwal_selesai_donor")?.asString?.subSequence(0, 10)
+        val deskripsi = item.get("deskripsi_acara")?.asString
+        val waktu = item.get("jadwal_selesai_donor")?.asString?.subSequence(11, 16).toString() + " - " + item.get("jadwal_selesai_donor")?.asString?.subSequence(11, 16)
+        val idKegiatan = item.get("id").asInt
+
+
+        val intent = Intent(context, DetailDonorActivity::class.java)
+        intent.putExtra("judul", judul)
+        intent.putExtra("tanggal", tanggal)
+        intent.putExtra("deskripsi", deskripsi)
+        intent.putExtra("waktu", waktu)
+        intent.putExtra("id",idKegiatan)
+        context?.startActivity(intent)
+    }
+
 
 }
+
+
