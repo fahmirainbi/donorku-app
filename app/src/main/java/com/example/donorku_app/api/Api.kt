@@ -74,6 +74,14 @@ interface Api {
         @Header("Authorization") token: String?
     ): Call<JsonElement>
 
+//    History
+
+    @GET("jadwal-kegiatan-donor")
+    fun historyGet(
+        @Header("Authorization") token: String?,
+        @Query("user") users: Int?
+    ): Call<JsonElement>
+
     //Kegiatan Donor Darah
     @GET("info-darah-darurat")
     fun infoGet(
@@ -136,11 +144,5 @@ interface Api {
         @Query("user") users: Int?
     ): Call<JsonElement>
 
-    @GET("jadwal-kegiatan-donor/{id}")
-    fun getHistoryDonor(
-        @Header("Authorization") token: String?,
-        @Path("id") id: Int,
-        @Query("user") users: Int?
-    ): Call<JsonElement>
 
 }

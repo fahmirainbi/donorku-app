@@ -40,6 +40,10 @@ class CouponDonorkuActivity : AppCompatActivity() {
 
     private lateinit var user: JsonObject
     private var token: String? = null
+
+    companion object {
+        val INTENT_PARCELABLE = "OBJECT_INTENT"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCouponDonorkuBinding.inflate(layoutInflater)
@@ -127,7 +131,7 @@ class RecyclerViewkuponAdapter(private val fragmentManager: FragmentManager, pri
                 val fragment = BottomSheetCouponFragment()
                 val bundle = Bundle()
                 bundle.putParcelable(
-                    ChangePointActivity.INTENT_PARCELABLE,ParcelableJsonObjectCoupon(item)
+                    CouponDonorkuActivity.INTENT_PARCELABLE,ParcelableJsonObjectCoupon(item)
                 )
                 fragment.arguments = bundle
                 fragment.show(fragmentManager, "BottomSheetDialog")

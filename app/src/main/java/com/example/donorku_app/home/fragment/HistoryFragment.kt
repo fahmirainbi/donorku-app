@@ -3,6 +3,8 @@ package com.example.donorku_app.home.fragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.donorku_app.R
 import com.example.donorku_app.api.ApiConfig
+import com.example.donorku_app.coupondonorku.BottomSheetCouponFragment
+import com.example.donorku_app.coupondonorku.ParcelableJsonObjectCoupon
 import com.example.donorku_app.coupondonorku.RecyclerViewkuponAdapter
 import com.example.donorku_app.databinding.FragmentBottomSheetPoinBinding
 import com.example.donorku_app.databinding.FragmentHistoryBinding
+import com.example.donorku_app.home.fragment.menu.Transaksi.ChangePointActivity
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -35,9 +40,10 @@ class HistoryFragment : Fragment() {
 
     private lateinit var user: JsonObject
     private var token: String? = null
-    private var idJadwal: Int = 0
 
-
+    companion object {
+        val INTENT_PARCELABLE = "OBJECT_INTENT"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +62,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         layoutManager = LinearLayoutManager(requireContext())
-        adapter = RecyclerViewHistory(requireContext(), listData)
+        adapter = RecyclerViewHistory(requireActivity().supportFragmentManager,requireContext(), listData)
 
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
         user    =  JsonParser.parseString(sharedPreferences.getString("user", null)).asJsonObject
@@ -66,14 +72,15 @@ class HistoryFragment : Fragment() {
         binding.recyclerHistory.adapter = adapter
 
         if(token != null){
-            getData(idJadwal)
+            getData()
         }
     }
 
-    private fun getData(idjadwal:Int) {
+    private fun getData() {
         listData.clear()
-            ApiConfig.instanceRetrofit.jadwalGet(
+            ApiConfig.instanceRetrofit.historyGet(
                 "Bearer " + token,
+                user.get("id")?.asInt
             ).enqueue(object : Callback<JsonElement> {
                 override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                     val json = response.body()?.asJsonObject
@@ -107,7 +114,7 @@ class HistoryFragment : Fragment() {
 
 }
 
-class RecyclerViewHistory(private val context: Context?, val itemList:List<JsonObject>):RecyclerView.Adapter<RecyclerViewHistory.ViewHolder>(){
+class RecyclerViewHistory(private val fragmentManager: FragmentManager,private val context: Context?, val itemList:List<JsonObject>):RecyclerView.Adapter<RecyclerViewHistory.ViewHolder>(){
     inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
         val judulView: TextView = itemView.findViewById(R.id.judulHistory)
         val tanggalView: TextView = itemView.findViewById(R.id.tanggalHistory)
@@ -138,6 +145,58 @@ class RecyclerViewHistory(private val context: Context?, val itemList:List<JsonO
         holder.waktuView.setText(item.get("jadwal_selesai_donor")?.asString?.subSequence(11, 16).toString() + " - " + item.get("jadwal_selesai_donor")?.asString?.subSequence(11, 16))
         holder.status.setText(item.get("status_donor")?.asString)
 
+
+        holder.itemView.setOnClickListener {
+            val fragment = BottomSheetHistoryFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(
+                HistoryFragment.INTENT_PARCELABLE, ParcelableJsonObjectHistory(item)
+            )
+            fragment.arguments = bundle
+            fragment.show(fragmentManager, "BottomSheetDialog")
+        }
     }
 
+}
+
+class ParcelableJsonObjectHistory(val jsonObject: JsonObject?) : Parcelable {
+
+    constructor(parcel: Parcel) : this(parcel.readString()?.let { com.google.gson.JsonParser.parseString(it).asJsonObject })
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(jsonObject?.toString())
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ParcelableJsonObjectHistory
+
+        if (jsonObject != other.jsonObject) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return jsonObject?.hashCode() ?: 0
+    }
+
+    override fun toString(): String {
+        return jsonObject?.toString() ?: ""
+    }
+
+    companion object CREATOR : Parcelable.Creator<ParcelableJsonObjectHistory> {
+        override fun createFromParcel(parcel: Parcel): ParcelableJsonObjectHistory {
+            return ParcelableJsonObjectHistory(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ParcelableJsonObjectHistory?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
