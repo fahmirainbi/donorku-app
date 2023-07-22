@@ -1,6 +1,7 @@
 package com.example.donorku_app.home.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Parcel
@@ -23,6 +24,7 @@ import com.example.donorku_app.coupondonorku.ParcelableJsonObjectCoupon
 import com.example.donorku_app.coupondonorku.RecyclerViewkuponAdapter
 import com.example.donorku_app.databinding.FragmentBottomSheetPoinBinding
 import com.example.donorku_app.databinding.FragmentHistoryBinding
+import com.example.donorku_app.donoractivity.DetailDonorActivity
 import com.example.donorku_app.home.fragment.menu.Transaksi.ChangePointActivity
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -62,7 +64,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         layoutManager = LinearLayoutManager(requireContext())
-        adapter = RecyclerViewHistory(requireActivity().supportFragmentManager,requireContext(), listData)
+        adapter = RecyclerViewHistory(childFragmentManager,requireContext(), listData)
 
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
         user    =  JsonParser.parseString(sharedPreferences.getString("user", null)).asJsonObject
@@ -80,7 +82,6 @@ class HistoryFragment : Fragment() {
         listData.clear()
             ApiConfig.instanceRetrofit.historyGet(
                 "Bearer " + token,
-                user.get("id")?.asInt
             ).enqueue(object : Callback<JsonElement> {
                 override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                     val json = response.body()?.asJsonObject
@@ -147,15 +148,16 @@ class RecyclerViewHistory(private val fragmentManager: FragmentManager,private v
 
 
         holder.itemView.setOnClickListener {
-            val fragment = BottomSheetHistoryFragment()
+            val idKegiatan = item.get("id").asInt
+
+            val bottomSheetFragment = BottomSheetHistoryFragment()
             val bundle = Bundle()
-            bundle.putParcelable(
-                HistoryFragment.INTENT_PARCELABLE, ParcelableJsonObjectHistory(item)
-            )
-            fragment.arguments = bundle
-            fragment.show(fragmentManager, "BottomSheetDialog")
+            bundle.putInt("id", idKegiatan)
+            bottomSheetFragment.arguments = bundle
+            bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
         }
     }
+
 
 }
 

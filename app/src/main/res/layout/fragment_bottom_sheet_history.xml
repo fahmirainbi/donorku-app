@@ -51,6 +51,7 @@
         android:layout_marginTop="-10dp"
         android:text="Silahkan tukarkan kode kupon dengan mendatangi kegitan donor darah, dan menyerahkan kode kupon kepada petugas kami"
         android:textAlignment="center"
+        android:padding="5dp"
         android:layout_gravity="center"
         android:textColor="@color/black"
         android:textSize="14dp" />

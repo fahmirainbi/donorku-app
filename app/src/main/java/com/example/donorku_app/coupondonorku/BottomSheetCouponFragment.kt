@@ -50,7 +50,6 @@ class BottomSheetCouponFragment : BottomSheetDialogFragment(){
         userid    =  JsonParser.parseString(sharedPreferences.getString("user", null)).asJsonObject
         token = sharedPreferences.getString("token", null)
 
-
     }
 
 
@@ -64,14 +63,9 @@ class BottomSheetCouponFragment : BottomSheetDialogFragment(){
         val parcelableData = arguments?.getParcelable<ParcelableJsonObjectCoupon>(INTENT_PARCELABLE)
         val item = parcelableData?.jsonObject
 
-
         if (item != null) {
             val title = item.get("kode_kupon").asString
-
-
             binding.tvKupon.text = title
-
-
         }
         return binding.root
     }

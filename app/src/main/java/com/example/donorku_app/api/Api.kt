@@ -79,8 +79,14 @@ interface Api {
     @GET("jadwal-kegiatan-donor")
     fun historyGet(
         @Header("Authorization") token: String?,
-        @Query("user") users: Int?
     ): Call<JsonElement>
+
+    @GET("jadwal-kegiatan-donor/{id}")
+    fun getStatusDonor(
+        @Header("Authorization") token: String?,
+        @Path("id") id: Int?,
+        @Query("user") users: Int?
+    ): Call<ApiResponse>
 
     //Kegiatan Donor Darah
     @GET("info-darah-darurat")
@@ -103,6 +109,12 @@ interface Api {
     fun donorRequest(
         @Body bloodRequestPost: BloodRequestPost, @Header("Authorization") token: String
     ): Call<BloodRequestPost>
+
+//    notifikasi update poin
+@POST("notifikasi")
+fun notification(
+    @Body postNotifikasiUpdatePoin: PostNotifikasiUpdatePoin, @Header("Authorization") token: String
+): Call<PostNotifikasiUpdatePoin>
 
     //Pengajuan Kegiatan Donor
 
