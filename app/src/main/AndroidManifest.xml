@@ -21,6 +21,9 @@
             android:name=".donoractivity.DetailDonorActivity"
             android:exported="false" />
         <activity
+            android:name=".donoremergency.DetailDonorEmergencyActivity"
+            android:exported="false" />
+        <activity
             android:name=".home.fragment.menu.Transaksi.ChangePointActivity"
             android:exported="false" />
         <activity
