@@ -62,4 +62,8 @@
         <item>Berhubungan seksual dengan orang yang tinggal di Afrika ?</item>,
         <item>Tinggal di Afrika ?</item>,
     </string-array>
+
+    <string name="default_notification_channel_id">
+        Donorku-Channel
+    </string>
 </resources>

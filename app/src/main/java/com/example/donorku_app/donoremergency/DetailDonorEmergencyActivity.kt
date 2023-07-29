@@ -93,8 +93,8 @@ class DetailDonorEmergencyActivity : AppCompatActivity() {
 
         selectedRadioValues = adapter.selectedRadioValues
         binding.btnregis.setOnClickListener {
-//            val posRegistration = RegistrationPost(selectedRadioValues.contentToString(),status, userId)
-////            postRegistration(posRegistration)
+            val posRegistration = RegistrationPost(selectedRadioValues.contentToString(),status, userId)
+            postRegistration(posRegistration)
             allertDialogSucces()
 
         }
@@ -105,27 +105,27 @@ class DetailDonorEmergencyActivity : AppCompatActivity() {
 
 
 
-//    private fun postRegistration(postContentResponse: RegistrationPost) {
-//        val idKegiatan = intent.getIntExtra("id", 0)
-//        ApiConfig.instanceRetrofit.daftarPost(
-//            postContentResponse,
-//            "Bearer " + token,
-//            idKegiatan
-//        ).enqueue(object : Callback<RegistrationPost> {
-//            override fun onResponse(
-//                call: Call<RegistrationPost>,
-//                response: Response<RegistrationPost>
-//            ) {
-//                Log.d("Data", "sukser")
-//            }
-//
-//            override fun onFailure(call: Call<RegistrationPost>, t: Throwable) {
-//                Log.d("Data", "Gagal" + t.message)
-//            }
-//
-//        })
-//
-//    }
+    private fun postRegistration(postContentResponse: RegistrationPost) {
+        val idKegiatan = intent.getIntExtra("id", 0)
+        ApiConfig.instanceRetrofit.infoDarahPost(
+            postContentResponse,
+            "Bearer " + token,
+            idKegiatan
+        ).enqueue(object : Callback<RegistrationPost> {
+            override fun onResponse(
+                call: Call<RegistrationPost>,
+                response: Response<RegistrationPost>
+            ) {
+                Log.d("Data", "sukser")
+            }
+
+            override fun onFailure(call: Call<RegistrationPost>, t: Throwable) {
+                Log.d("Data", "Gagal" + t.message)
+            }
+
+        })
+
+    }
 
 
     fun allertDialogSucces() {

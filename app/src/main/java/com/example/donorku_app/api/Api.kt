@@ -131,6 +131,14 @@ fun notification(
         @Path("id") id: Int?
     ): Call<RegistrationPost>
 
+//    daftar info darah darurat
+@POST("info-darah-darurat/{id}/add-pendonor")
+fun infoDarahPost(
+    @Body registrationPost: RegistrationPost,
+    @Header("Authorization") token: String?,
+    @Path("id") id: Int?
+): Call<RegistrationPost>
+
     //notifikasi
     @GET("notifikasi")
     fun getnotifikasi(@Header("Authorization") token: String?): Call<JsonElement>

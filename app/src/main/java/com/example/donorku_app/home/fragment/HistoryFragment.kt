@@ -64,6 +64,8 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         layoutManager = LinearLayoutManager(requireContext())
+        (layoutManager as LinearLayoutManager).reverseLayout = true
+        (layoutManager as LinearLayoutManager).stackFromEnd = true
         adapter = RecyclerViewHistory(childFragmentManager,requireContext(), listData)
 
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)

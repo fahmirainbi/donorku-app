@@ -48,6 +48,8 @@ class DonorActivity: AppCompatActivity(){
         }
 
         layoutManager = LinearLayoutManager(this)
+        (layoutManager as LinearLayoutManager).reverseLayout = true
+        (layoutManager as LinearLayoutManager).stackFromEnd = true
         adapter = RecyclerViewAdapter(this, listData)
 
         val sharedPreferences: SharedPreferences = applicationContext.getSharedPreferences("session", Context.MODE_PRIVATE)
