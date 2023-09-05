@@ -53,10 +53,10 @@ interface Api {
     ): Call<JsonElement>
 
     //    userGet
-    @GET("users")
+    @GET("users/{id}")
     fun getPoin(
         @Header("Authorization") token: String?,
-        @Query("user") users: Int?
+        @Path("id") id: Int?
     ): Call<JsonElement>
 
     //  userPut
@@ -104,17 +104,18 @@ interface Api {
     //Info Darah Darurat
 
 
-//Permintaan Darah
+    //Permintaan Darah
     @POST("permintaan-darah")
     fun donorRequest(
         @Body bloodRequestPost: BloodRequestPost, @Header("Authorization") token: String
     ): Call<BloodRequestPost>
 
-//    notifikasi update poin
-@POST("notifikasi")
-fun notification(
-    @Body postNotifikasiUpdatePoin: PostNotifikasiUpdatePoin, @Header("Authorization") token: String
-): Call<PostNotifikasiUpdatePoin>
+    //    notifikasi update poin
+    @POST("notifikasi")
+    fun notification(
+        @Body postNotifikasiUpdatePoin: PostNotifikasiUpdatePoin,
+        @Header("Authorization") token: String
+    ): Call<PostNotifikasiUpdatePoin>
 
     //Pengajuan Kegiatan Donor
 
@@ -131,13 +132,13 @@ fun notification(
         @Path("id") id: Int?
     ): Call<RegistrationPost>
 
-//    daftar info darah darurat
-@POST("info-darah-darurat/{id}/add-pendonor")
-fun infoDarahPost(
-    @Body registrationPost: RegistrationPost,
-    @Header("Authorization") token: String?,
-    @Path("id") id: Int?
-): Call<RegistrationPost>
+    //    daftar info darah darurat
+    @POST("info-darah-darurat/{id}/add-pendonor")
+    fun infoDarahPost(
+        @Body registrationPost: RegistrationPost,
+        @Header("Authorization") token: String?,
+        @Path("id") id: Int?
+    ): Call<RegistrationPost>
 
     //notifikasi
     @GET("notifikasi")
@@ -151,7 +152,7 @@ fun infoDarahPost(
     @GET("barang")
     fun getBarang(@Header("Authorization") token: String?): Call<JsonElement>
 
-//    transaksi
+    //    transaksi
     @Headers("Content-Type: application/json")
     @POST("transaksi")
     fun postKuppon(

@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.example.donorku_app.api.ApiConfig
 import com.example.donorku_app.databinding.ActivitySignUpBinding
 import com.example.donorku_app.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,19 +16,76 @@ import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
+    private lateinit var auth: FirebaseAuth
+
+    override fun onStart() {
+        super.onStart()
+        auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null && auth.currentUser?.isEmailVerified == true) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
+        auth = FirebaseAuth.getInstance()
+
         binding.ivBack.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
         binding.btnDaftar.setOnClickListener {
-            startActivity(Intent(this,LoginActivity::class.java))
-            Toast.makeText(this,"Anda berhasil daftar",Toast.LENGTH_LONG).show()
+            authentification()
             enableButton()
+            Toast.makeText(this@SignUpActivity, "Anda berhasil daftar", Toast.LENGTH_SHORT)
+                .show()
+
+            binding.etName.text.clear()
+            binding.etNumber.text.clear()
+            binding.etEmailSignup.text.clear()
+            binding.etPasswordSignup.text.clear()
+            binding.etPasswordConfirmation.text.clear()
+        }
+    }
+
+
+    fun authentification() {
+        auth.createUserWithEmailAndPassword(
+            binding.etEmailSignup.text.toString(),
+            binding.etPasswordSignup.text.toString()
+        ).addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
+                val user = auth.currentUser
+                user?.sendEmailVerification()
+                    ?.addOnCompleteListener { verificationTask ->
+                        if (verificationTask.isSuccessful) {
+                            Toast.makeText(
+                                this@SignUpActivity,
+                                "Email verifikasi telah dikirim. Silakan verifikasi email Anda.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            val error = verificationTask.exception
+                            Log.e("SignUpActivity", "Gagal mengirim email verifikasi: ${error?.message}")
+                            Toast.makeText(
+                                this@SignUpActivity,
+                                "Gagal mengirim email verifikasi. Error: ${error?.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    }
+            } else {
+                Toast.makeText(
+                    this@SignUpActivity,
+                    "Gagal registrasi. Pastikan email dan password valid.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
@@ -64,18 +122,13 @@ class SignUpActivity : AppCompatActivity() {
 
         ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Toast.makeText(
-                    this@SignUpActivity,
-                    "Anda berhasil daftar",
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(this@SignUpActivity, "Anda gagal daftar", Toast.LENGTH_SHORT)
                     .show()
-                Log.e("daftar"," Gagal daftar karena :" + t.message)
+                Log.e("daftar", " Gagal daftar karena :" + t.message)
             }
 
         })

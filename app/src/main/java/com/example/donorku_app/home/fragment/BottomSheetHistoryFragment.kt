@@ -254,7 +254,7 @@ class BottomSheetHistoryFragment : BottomSheetDialogFragment() {
                         listData.add(d.asJsonObject)
                     }
                     val poinDonor = getDataPoinFromListData(listData)
-                    val poinUpdate = poinDonor + 500
+                    val poinUpdate = poinDonor + 1000
 
                     ApiConfig.instanceRetrofit.minPoin(
                         "Bearer " + token,

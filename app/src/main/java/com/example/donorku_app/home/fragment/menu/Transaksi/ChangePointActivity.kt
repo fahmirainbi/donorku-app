@@ -138,6 +138,11 @@ class RecyclerViewPoinDonorAdapter(private val fragmentManager: FragmentManager,
         holder.imagePoin.setImageResource(R.drawable.ic_poin)
 
         holder.itemView.setOnClickListener {
+            if (holder.statusBarang.text == "tidak_tersedia") {
+                // Status donor tidak tersedia, tindakan klik tidak dilakukan
+                return@setOnClickListener
+            }
+
             val fragment = BottomSheetPoinFragment()
             val bundle = Bundle()
             bundle.putParcelable(INTENT_PARCELABLE, ParcelableJsonObject(item))

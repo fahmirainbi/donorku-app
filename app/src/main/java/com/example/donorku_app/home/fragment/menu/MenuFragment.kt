@@ -3,10 +3,12 @@ package com.example.donorku_app.home.fragment.menu
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.donorku_app.R
 import com.example.donorku_app.api.ApiConfig
 import com.example.donorku_app.databinding.FragmentMenuBinding
@@ -27,6 +30,10 @@ import com.google.gson.JsonParser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MenuFragment : Fragment() {
     private lateinit var binding: FragmentMenuBinding
@@ -50,7 +57,7 @@ class MenuFragment : Fragment() {
         val sharedPreferences: SharedPreferences =
             requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
         user = sharedPreferences.getString("user", null)
-        userId    =  JsonParser.parseString(sharedPreferences.getString("user", null)).asJsonObject
+        userId = JsonParser.parseString(sharedPreferences.getString("user", null)).asJsonObject
         token = sharedPreferences.getString("token", null)
     }
 
@@ -62,7 +69,6 @@ class MenuFragment : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,7 +92,7 @@ class MenuFragment : Fragment() {
 
         binding.btnPoin.setOnClickListener {
             requireActivity().run {
-                val intent =Intent(this, ChangePointActivity::class.java)
+                val intent = Intent(this, ChangePointActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                 startActivity(intent)
                 finish()
@@ -95,7 +101,7 @@ class MenuFragment : Fragment() {
 
         binding.btnFaq.setOnClickListener {
             requireActivity().run {
-                val intent =Intent(this, FaqActivity::class.java)
+                val intent = Intent(this, FaqActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                 startActivity(intent)
                 finish()
@@ -118,10 +124,8 @@ class MenuFragment : Fragment() {
 
     private val updatePointsRunnable = object : Runnable {
         override fun run() {
-            // Panggil fungsi getData() untuk memperbarui poin
             getData()
 
-            // Jadwalkan pemanggilan berikutnya setelah jeda waktu
             handler.postDelayed(this, updateInterval)
         }
     }
@@ -139,17 +143,6 @@ class MenuFragment : Fragment() {
         requireActivity().finish();
     }
 
-    private fun getDataPoinFromListData(listData: List<JsonObject>): Int {
-        var totalPoin = 0
-        for (data in listData) {
-            val poin = data.get("poin_donor")?.asInt
-            if (poin != null) {
-                totalPoin += poin
-            }
-        }
-        return totalPoin
-    }
-
 
     private fun getData() {
         listData.clear()
@@ -157,27 +150,70 @@ class MenuFragment : Fragment() {
             "Bearer " + token,
             userId.get("id")?.asInt
         ).enqueue(object : Callback<JsonElement> {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
-                val json = response.body()?.asJsonObject
-                if(json?.has("success") == true && json?.has("data") == true){
-                    val data = json?.get("data")?.asJsonArray
-                    data?.forEach { d->
-                        listData.add(d.asJsonObject)
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val dataObject = responseBody.asJsonObject
+                        val poinDonor = dataObject.get("data").asJsonObject?.get("poin_donor")?.asInt
+                        userPointTextView?.text = poinDonor.toString()
+
+
+                        val currentDate = LocalDate.now()
+                        val currentYear = currentDate.year
+                        val expirationDate = LocalDate.of(currentYear, 12, 31)
+                        val dateFormatter =
+                            DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.getDefault())
+                        val formattedExpirationDate = expirationDate.format(dateFormatter)
+
+
+                        if (currentDate.isAfter(expirationDate)) {
+                            val textPoin = 0
+                            userPointTextView?.text = textPoin.toString()
+                            ApiConfig.instanceRetrofit.minPoin(
+                                "Bearer " + token,
+                                userId.get("id")?.asInt,
+                                poinDonor
+                            ).enqueue(object : Callback<JsonElement> {
+                                override fun onResponse(
+                                    call: Call<JsonElement>,
+                                    response: Response<JsonElement>
+                                ) {
+
+                                }
+
+                                override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                                    Log.d("Data", "Data Tidak sesuai" + t.message)
+                                }
+
+                            })
+                        }
+
+
+                        if (poinDonor != 0) {
+                            binding.tvDateExpPoin.visibility = android.view.View.VISIBLE
+                            binding.tvDescExpPoin.visibility = android.view.View.VISIBLE
+                            binding.tvDateExpPoin.text = formattedExpirationDate.toString()
+                        } else {
+                            binding.tvDateExpPoin.visibility = android.view.View.GONE
+                            binding.tvDescExpPoin.text = ""
+//                        binding.tvDescExpPoin.setTextColor(resources.getColor(R.color.green))
+                        }
+                        userPointTextView?.text = poinDonor.toString()
                     }
-                    val poinDonor = getDataPoinFromListData(listData)
-                    userPointTextView?.text = poinDonor.toString()
-
-
                 }
             }
 
             override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                Toast.makeText(requireContext(), "Error : " + t.message.toString(), Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    requireContext(),
+                    "Error : " + t.message.toString(),
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             }
 
         })
     }
-
-
 }

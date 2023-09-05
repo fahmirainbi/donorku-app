@@ -11,6 +11,7 @@ import com.example.donorku_app.api.ApiConfig
 import com.example.donorku_app.databinding.ActivityLoginBinding
 import com.example.donorku_app.home.HomeActivity
 import com.example.donorku_app.signup.SignUpActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,6 +19,7 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        auth = FirebaseAuth.getInstance()
 
 
 
@@ -59,8 +62,25 @@ class LoginActivity : AppCompatActivity() {
             binding.etPasswordLogin.requestFocus()
             return
         }
-
-
+        auth.signInWithEmailAndPassword(
+            binding.etEmailLogin.text.toString(),
+            binding.etPasswordLogin.text.toString()
+        ).addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
+                val user = auth.currentUser
+                if (user?.isEmailVerified == true) {
+                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Anda harus memverifikasi email Anda terlebih dahulu.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } else {
+            }
+        }
         binding.pb.visibility = View.VISIBLE
 
         ApiConfig.instanceRetrofit.loginPost(

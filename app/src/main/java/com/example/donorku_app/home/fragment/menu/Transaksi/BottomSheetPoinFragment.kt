@@ -36,7 +36,6 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
     private lateinit var binding: FragmentBottomSheetPoinBinding
     private lateinit var bottomSheetPoinPresenter: BottomSheetPoinPresenter
 
-
     private var user: String? = null
     private var token: String? = null
     private lateinit var userid: JsonObject
@@ -63,33 +62,16 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBottomSheetPoinBinding.inflate(inflater, container, false)
-
-
         userPointTextView = view?.findViewById(R.id.tvPoinPribadi)
-
         if (user != null) {
             val jsonObject = JsonParser.parseString(user).asJsonObject
             userPointTextView?.text = jsonObject.get("poin_donor").asString
         }
-
         getData()
-
-
-
         return binding.root
     }
 
 
-    private fun getDataPoinFromListData(listData: List<JsonObject>): Int {
-        var totalPoin = 0
-        for (data in listData) {
-            val poin = data.get("poin_donor")?.asInt
-            if (poin != null) {
-                totalPoin += poin
-            }
-        }
-        return totalPoin
-    }
 
     private fun getData() {
         listData.clear()
@@ -98,47 +80,73 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
             userid.get("id")?.asInt
         ).enqueue(object : Callback<JsonElement> {
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
-                val json = response.body()?.asJsonObject
-                if (json?.has("success") == true && json?.has("data") == true) {
-                    val data = json?.get("data")?.asJsonArray
-                    data?.forEach { d ->
-                        listData.add(d.asJsonObject)
-                    }
-                    val parcelableData =
-                        arguments?.getParcelable<ParcelableJsonObject>(INTENT_PARCELABLE)
-                    val item = parcelableData?.jsonObject
-                    val poinDonor = getDataPoinFromListData(listData)
-                    binding.tvPoinPribadi.text = poinDonor.toString()
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val dataObject = responseBody.asJsonObject
+                        val poinDonor = dataObject.get("data").asJsonObject?.get("poin_donor")?.asInt
+                        userPointTextView?.text = poinDonor.toString()
+                        val parcelableData =
+                            arguments?.getParcelable<ParcelableJsonObject>(INTENT_PARCELABLE)
+                        val item = parcelableData?.jsonObject
+                        binding.tvPoinPribadi.text = poinDonor.toString()
 
-                    if (item != null) {
-                        val title = item.get("nama_barang").asString
-                        val description = item.get("harga_kupon").asString
-                        val descriptionku = item.get("harga_kupon").asInt
-                        val poinDonor = getDataPoinFromListData(listData)
-                        val poinDonorku = poinDonor.toInt()
-                        val sisaPoin = poinDonorku - descriptionku
+                        if (item != null) {
+                            val title = item.get("nama_barang").asString
+                            val description = item.get("harga_kupon").asString
+                            val descriptionku = item.get("harga_kupon").asInt
+                            val poinDonor = dataObject.get("data").asJsonObject?.get("poin_donor")?.asInt
+                            val sisaPoin = poinDonor?.minus(descriptionku)
 
 
-                        binding.tvNamaBarangKonfir.text = title
-                        binding.tvHargaBarangKonfir.text = description
-                        binding.tvPoinVoucher.text = description
+                            binding.tvNamaBarangKonfir.text = title
+                            binding.tvHargaBarangKonfir.text = description
+                            binding.tvPoinVoucher.text = description
 
 
-                        if (sisaPoin <= 0) {
-                            binding.tvSisaPoin.text = "Poin kurang"
-                        } else {
-                            binding.tvSisaPoin.text = sisaPoin.toString()
-                        }
+                            if (sisaPoin != null) {
+                                if (sisaPoin <= 0) {
+                                    binding.tvSisaPoin.text = "Poin kurang"
+                                } else {
+                                    binding.tvSisaPoin.text = sisaPoin.toString()
+                                }
+                            }
 
-                        binding.btnTukarkanPoin.setOnClickListener {
-                            if (sisaPoin <= 0) {
-                                allertFailure()
-                            } else {
-                                setupDataComponent()
-                                setupListener()
-                                updatePoinDonor()
-                                allertDialogSucces()
+                            fun updatePoinDonor() {
+                                ApiConfig.instanceRetrofit.minPoin(
+                                    "Bearer " + token,
+                                    userid.get("id")?.asInt,
+                                    sisaPoin
+                                ).enqueue(object : Callback<JsonElement> {
+                                    override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                                        if (response.isSuccessful) {
+                                            onAddContentSuccess("Data Sukses Dikirim")
+                                        } else {
+                                            onAddContentFailure("Gagal mengirim data")
+                                        }
 
+                                    }
+
+                                    override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                                        onAddContentFailure("Data Tidak Sesuai" + t.message)
+                                        Log.d("Data", "Data Tidak sesuai" + t.message)
+                                    }
+
+                                })
+                            }
+
+                            binding.btnTukarkanPoin.setOnClickListener {
+                                if (sisaPoin != null) {
+                                    if (sisaPoin <= 0) {
+                                        allertFailure()
+                                    } else {
+                                        setupDataComponent()
+                                        setupListener()
+                                        updatePoinDonor()
+                                        allertDialogSucces()
+
+                                    }
+                                }
                             }
                         }
                     }
@@ -168,7 +176,6 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
         Toast.makeText(requireContext(), errMessage, Toast.LENGTH_SHORT).show()
     }
 
-
     private fun setupListener() {
         val sharedPreferences: SharedPreferences =
             requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
@@ -176,7 +183,6 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
         val parcelableData = arguments?.getParcelable<ParcelableJsonObject>(INTENT_PARCELABLE)
         val item = parcelableData?.jsonObject
         if (token != null && item != null) {
-
 
             val jsonObject = JsonParser.parseString(user).asJsonObject
             val user1 = jsonObject.get("id").asInt
@@ -189,9 +195,6 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
 
             val clickedDateTime = Calendar.getInstance().time
             val batasPenukaran = calculateBatasPenukaran(clickedDateTime)
-
-
-
 
             if (item != null) {
                 val title = item.get("id").asInt
@@ -234,34 +237,6 @@ class BottomSheetPoinFragment : BottomSheetDialogFragment(), BottomSheetPoinPres
         return calendar.time
     }
 
-    private fun updatePoinDonor() {
-        val parcelableData = arguments?.getParcelable<ParcelableJsonObject>(INTENT_PARCELABLE)
-        val item = parcelableData?.jsonObject
-        val descriptionku = item?.get("harga_kupon")?.asInt
-        val poinDonor = getDataPoinFromListData(listData)
-        val poinDonorku = poinDonor
-        val sisaPoin = poinDonorku - descriptionku!!
-        ApiConfig.instanceRetrofit.minPoin(
-            "Bearer " + token,
-            userid.get("id")?.asInt,
-            sisaPoin
-        ).enqueue(object : Callback<JsonElement> {
-            override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
-                if (response.isSuccessful) {
-                    onAddContentSuccess("Data Sukses Dikirim")
-                } else {
-                    onAddContentFailure("Gagal mengirim data")
-                }
-
-            }
-
-            override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                onAddContentFailure("Data Tidak Sesuai" + t.message)
-                Log.d("Data", "Data Tidak sesuai" + t.message)
-            }
-
-        })
-    }
 
 
     fun allertDialogSucces() {

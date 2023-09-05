@@ -140,9 +140,9 @@ class DetailDonorEmergencyActivity : AppCompatActivity() {
         val deskripsi = dialogBinding.findViewById<TextView>(R.id.tvdeskripsi)
         val buton = dialogBinding.findViewById<Button>(R.id.btnAlert)
 
-        judul.setText("Pengajuan Kegiatan Donor Darah Berhasil")
+        judul.setText("Pendaftaran Donor Darah Berhasil")
         gambar.setImageResource(R.drawable.img_success)
-        deskripsi.setText("Pengajuan kegiatan donor darah berhasil silahkan menunggu 1X24 Jam, petugas kami akan menghubungi secepatnya")
+        deskripsi.setText("Pendaftaran Donor Darah Berhasil silahkan mendatangi tempat donor darah")
 
         buton.setOnClickListener {
             val intent = Intent(this@DetailDonorEmergencyActivity, HomeActivity::class.java)
